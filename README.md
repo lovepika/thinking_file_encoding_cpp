@@ -680,7 +680,7 @@ hello add u8 prefix u8_en_str(hello) size=5 strlen(u8_en_str.data())=5
 
 首选编码选择： `UTF-8 With BOM`
 
-VS下设置MSVC编译选项：`/execution-charset:gbk`
+**可选**：如果需要在cmd窗口标题显示中文，或者要打印硬编码的中文，需要在VS下设置MSVC编译选项：`/execution-charset:gbk`
 
 CMake项目增加如下配置
 
@@ -691,9 +691,13 @@ if(MSVC)
 endif()
 ```
 
-另一种就是：文件编码用`UTF-8`，增加MSVC编译选项 `/source-charset:utf-8 /execution-charset:gbk`。 但是UTF-8编码如果在Windows下不带BOM，编译项目经常看到大量警告。
+**如果不涉及到中文**，其实，编码方案方案继续用`UTF-8`没问题，就是需要增加MSVC编译选项 `/utf-8` (VS2015起)。
 
-还有一种方案就是`UTF-8`，增加 `/utf-8` 选项， 并且涉及到窗口标题，终端文字的中文显示，windows下需要特殊处理，进行一次转码`Utf8ToGbk`。 Linux下不需要，默认就是UTF-8. 
+**涉及中文**
+
+另外方案就是：文件编码用`UTF-8`，增加MSVC编译选项 `/source-charset:utf-8 /execution-charset:gbk`。 但是UTF-8编码如果在Windows下不带BOM，编译项目经常看到大量警告。
+
+如果非要用`UTF-8`, 并且不想引入GBK的字符集，则增加 `/utf-8` 选项， 并且涉及到窗口标题，终端文字的中文显示，windows下需要特殊处理，进行一次转码`Utf8ToGbk`。 Linux下不需要，默认就是UTF-8. 
 **也就是说，源代码使用UTF-8，那么设置了`/utf-8` 选项，就要转码函数!, 其实这样更清晰，无非就是不同平台用转码特殊处理下。**
 
 
