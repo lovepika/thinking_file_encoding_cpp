@@ -189,7 +189,9 @@ int main()
 实验2： `std::string win_name(u8_zh_str);` 作为窗口名字
 结果：窗口文字乱 (乱码文字上面不一样)
 
-> tips: 只要源代码是UTF-8 No BOM，就需要增加 `/source-charset:utf-8`, 不然因为VS并不能探测到文件编码类型则当作当前代码页处理，这里为gb2312.
+> 注: 源代码是UTF-8 No BOM，却没有增加编译选项，VS探测不到文件编码时将当作当前代码页处理，这里为`936`. 没有指定编译选项相当于编译选项为： `/source-charset:gbk /execution-charset:gbk`
+>
+> 想要正确解析源代码文件就需要增加 `/source-charset:utf-8`
 
 
 ### 编译选项 `/source-charset:utf-8`
