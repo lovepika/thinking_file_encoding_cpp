@@ -1,6 +1,8 @@
-# thinking_file_encoding_cpp
+> cpp source code file encoding thinking
+> 
+> repo link: https://github.com/lovepika/thinking_file_encoding_cpp
 
-cpp source code file encoding thinking
+# cpp源码在跨平台场景下文件编码的思考
 
 # 1.为什么写这篇文章
 
@@ -682,9 +684,16 @@ hello add u8 prefix u8_en_str(hello) size=5 strlen(u8_en_str.data())=5
 
 首选编码选择： `UTF-8 With BOM`
 
-**可选**：如果需要在cmd窗口标题显示中文，或者要打印硬编码的中文，需要在VS下设置MSVC编译选项：`/execution-charset:gbk`
+**可选**：如果需要**不增加字符串编码转换函数的情况下**在cmd窗口标题显示中文，或者要打印硬编码的中文，还需要在VS下设置MSVC编译选项：`/execution-charset:gbk` 
 
-CMake项目增加如下配置
+> 为什么还需要`/execution-charset:gbk`?
+> 
+> Windows下文件编码虽然使用了utf-8 with bom，但是由于没有增加编译选项`/execution-charset` 选项，源代码文件编码能识别为UTF-8(`/source-charset:`这部分不用关心), 但是由于没有指定`/execution-charset`，MSVC的处理是**如果没有指定则会应用当前系统代码页**, 源代码中没有显示使用`u8`前缀字符串字面量仍然会使用系统当前代码页编码字符串(Windows下这种操作，我认为很坑的事情)。
+> 
+> 所以如果你需要明确表示一个字符串字面量是UTF-8编码的，最好的方法就是使用`u8`前缀。
+
+
+**基于CMake项目增加如下配置**
 
 ```cmake
 if(MSVC)
