@@ -682,9 +682,9 @@ hello add u8 prefix u8_en_str(hello) size=5 strlen(u8_en_str.data())=5
 
 # 6.跨win/linux项目的编码选择和编译选项设置该如何选?
 
-首选编码选择： `UTF-8 With BOM`
+首选： `UTF-8 With BOM`
 
-**可选**：如果需要**不增加字符串编码转换函数的情况下**在cmd窗口标题显示中文，或者要打印硬编码的中文，还需要在VS下设置MSVC编译选项：`/execution-charset:gbk` 
+**注**：如果需要**不增加字符串编码转换函数的情况下**在cmd窗口标题显示中文，或者要打印硬编码的中文，还需要在VS下设置MSVC编译选项：`/execution-charset:gbk` 
 
 > 为什么还需要`/execution-charset:gbk`?
 > 
